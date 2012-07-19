@@ -5,6 +5,7 @@ django-appconf==0.5
 django-compressor==1.1.2
 django-debug-toolbar==0.9.4
 django-extensions==0.9
+django-hallo-markdown==0.1.1
 jsmin==2.0.2
 psycopg2==2.4.5
 python-memcached==1.48
