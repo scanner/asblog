@@ -30,22 +30,20 @@ from asblog.models import Blog, Post
 class BlogSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.RelatedField()
     owner_id = serializers.Field(source='owner.id')
-    posts = serializers.HyperlinkedRelatedField(many=True,
-                                                view_name='post-detail')
+    posts = serializers.HyperlinkedIdentityField(view_name='post-list')
 
     class Meta:
         model = Blog
         fields = ('url', 'title', 'description', 'created', 'updated',
-                  'owner_username', 'owner_id')
+                  'owner', 'owner_id', 'posts')
 
 
 ########################################################################
 ########################################################################
 #
 class PostSerializer(serializers.HyperlinkedModelSerializer):
-    blog = serializers.HyperlinkedIdentityField(queryset=Blog.objects.all(),
-                                                read_only=True,
-                                                view_name='blog-detail')
+    blog = serializers.HyperlinkedRelatedField(read_only=True,
+                                               view_name='blog-detail')
     author = serializers.Field(source='author')
 
     class Meta:

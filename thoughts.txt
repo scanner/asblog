@@ -1,0 +1,15 @@
+=== Initial feature goals
+
+o blogs owned by a specific user
+o object level permissions
+o blog permissions:
+  o create
+  o edit/update
+  o post - ability to create a post on a blog
+  o delete
+  o view
+o post permissions
+  o create - 
+  o edit/update
+  o delete
+  o 

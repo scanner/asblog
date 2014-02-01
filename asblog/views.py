@@ -10,14 +10,14 @@ from rest_framework import permissions
 # ASBlog imports
 #
 from models import Blog, Post
-from serializers import BlogSerializer
+from serializers import BlogSerializer, PostSerializer
 from permissions import IsOwnerOrReadOnly
 
 
 ########################################################################
 ########################################################################
 #
-class ASBlogViewSet(viewsets.ModelViewSet):
+class BlogViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
@@ -42,3 +42,21 @@ class ASBlogViewSet(viewsets.ModelViewSet):
         Automatically set the owner of a blog when it is created.
         """
         obj.owner = self.request.user
+
+
+########################################################################
+########################################################################
+#
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()  # XXX not linked to a blog?
+    serializer_class = PostSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+
+    ####################################################################
+    #
+    def pre_save(self, obj):
+        """
+        Automatically set the owner of a blog when it is created.
+        """
+        obj.author = self.request.user
